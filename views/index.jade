@@ -1,0 +1,43 @@
+doctype html
+html(lang='en')
+head
+  meta(charset='UTF-8')
+  |  
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  |  
+  title 后台管理
+body
+  h1 中奖用户
+  |  
+  table(border="1")
+    tbody
+    tr
+      th 姓名
+      |   
+      th 手机号
+      |   
+      th 奖品
+    |   
+    for user in users
+      tr
+        td #{user.name}
+        |   
+        td #{user.num}
+        |   
+        td #{user.prize}
+  h1 修改中奖几率
+  - var val = probability
+  h3 当前中奖几率  #{probability}%
+  input(id='val') 
+  button(onclick="probabilityChange()") 修改
+  script(src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js")
+  script.
+    function probabilityChange(){
+      var val = $('#val').val()
+      console.log(val)
+      $.ajax({
+        url:'/api/v1/probability',
+        type:'PUT',
+        data:{'val':val}
+      })
+    }
