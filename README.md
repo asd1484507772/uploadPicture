@@ -1,9 +1,12 @@
 # upload_picture
 
-前端
-分为两个分支
-master分支放的是前端
-server分支放的是后端
+### 这是前端
+
+### 分为两个分支
+
+### master分支放的是前端
+
+### server分支放的是后端
 
 ## Build Setup
 
