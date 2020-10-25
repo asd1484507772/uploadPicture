@@ -15,7 +15,7 @@ module.exports = function(app) {
     app.post('/api/v1/pictures', upload.single('file'), function(req, res, next) {
         //返回路径
         return res.status(200).send({
-            url: "http://localhost:3000/uploads/" + req.file.filename
+            url: "http://localhost:3000/" + req.file.filename
         });
 
     });

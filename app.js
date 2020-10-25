@@ -35,7 +35,7 @@ var accessLogStream = FileStreamRotator.getStream({
     verbose: false
 });
 
-app.use('/uploads', express.static(__dirname + '/uploads'))
+app.use('/', express.static(__dirname + '/uploads'))
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'favicon', 'favicon.ico')));
