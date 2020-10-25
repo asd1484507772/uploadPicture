@@ -110,7 +110,6 @@
               <img
                 :src="queryFirmInfo.idPicUrl"
                 alt=""
-                style="max-height: 200px; max-width: 250px"
                 class="myimage"
                 :name="queryFirmInfo.idPicUrl"
                 id="imgsrc"
@@ -131,7 +130,7 @@
               />
             </div>
             <!-- 放大遮罩层 -->
-            <div id="bigimg" @click="closeimg" style="z-index:1"></div>
+            <div id="bigimg" @click="closeimg" style="z-index: 1"></div>
           </div>
           <div class="modal-footer">
             <button
@@ -174,7 +173,7 @@ export default {
   data() {
     return {
       queryFirmInfo: {
-        idPicUrl: '',
+        idPicUrl: "",
       },
     };
   },
@@ -186,7 +185,7 @@ export default {
       let supportedTypes = ["image/jpg", "image/jpeg", "image/png"];
       if (file && supportedTypes.indexOf(file.type) >= 0) {
         baseFileAjax(new FormData($("#fileForm")[0]), function (result) {
-          vm.queryFirmInfo["idPicUrl"] = result.url
+          vm.queryFirmInfo["idPicUrl"] = result.url;
           // vm.queryFirmInfo["idPicUrl"].push(result.url);
         });
       } else {
@@ -227,6 +226,11 @@ export default {
   margin: 50px auto;
 }
 
+#imgdiv img {
+  max-height: 250px;
+  max-width: 250px;
+}
+
 #bigimg {
   width: 100%;
   height: 100%;
@@ -260,7 +264,7 @@ export default {
   margin: 0 10px;
   cursor: pointer;
 }
-#carouselExampleFade{
+#carouselExampleFade {
   background-color: #ccc;
 }
 </style>
