@@ -47,7 +47,7 @@
           </div>
           <div class="modal-body">
             <!-- 图片容器 -->
-            <!-- <div
+            <div
               id="carouselExampleFade"
               class="carousel slide carousel-fade"
               data-ride="carousel"
@@ -55,28 +55,25 @@
               <div class="carousel-inner" id="imgdiv">
                 <div class="carousel-item active">
                   <img
-                    :src="queryFirmInfo.idPicUrl[0]"
+                    :src="idPicUrlArr[0]"
                     class="d-block w-100"
                     alt="..."
-                    id="imgsrc"
                     @click="imgbig"
                   />
                 </div>
                 <div class="carousel-item">
                   <img
-                    :src="queryFirmInfo.idPicUrl[1]"
+                    :src="idPicUrlArr[1]"
                     class="d-block w-100"
                     alt="..."
-                    id="imgsrc"
                     @click="imgbig"
                   />
                 </div>
                 <div class="carousel-item">
                   <img
-                    :src="queryFirmInfo.idPicUrl[2]"
+                    :src="idPicUrlArr[2]"
                     class="d-block w-100"
                     alt="..."
-                    id="imgsrc"
                     @click="imgbig"
                   />
                 </div>
@@ -105,15 +102,6 @@
                 ></span>
                 <span class="sr-only">Next</span>
               </a>
-            </div> -->
-            <div id="imgdiv" @click="imgbig">
-              <img
-                :src="queryFirmInfo.idPicUrl"
-                alt=""
-                class="myimage"
-                :name="queryFirmInfo.idPicUrl"
-                id="imgsrc"
-              />
             </div>
             <div class="handleimg-head">
               <img
@@ -172,10 +160,17 @@ export default {
   name: "HelloWorld",
   data() {
     return {
-      queryFirmInfo: {
-        idPicUrl: "",
-      },
+      idPicUrl: [],
     };
+  },
+  computed: {
+    idPicUrlArr() {
+      let arr = this.idPicUrl;
+      if (arr.length > 3) {
+        arr.shift();
+      }
+      return arr;
+    },
   },
   methods: {
     //选择改变图片
@@ -185,15 +180,14 @@ export default {
       let supportedTypes = ["image/jpg", "image/jpeg", "image/png"];
       if (file && supportedTypes.indexOf(file.type) >= 0) {
         baseFileAjax(new FormData($("#fileForm")[0]), function (result) {
-          vm.queryFirmInfo["idPicUrl"] = result.url;
-          // vm.queryFirmInfo["idPicUrl"].push(result.url);
+          vm.idPicUrl.push(result.url);
         });
       } else {
         alert("文件格式只支持：jpg、jpeg 和 png");
       }
     },
-    imgbig() {
-      var imgsrc = $("#imgsrc").attr("src");
+    imgbig(e) {
+      var imgsrc = e.target.src;
       $("#bigimg").css("display", "block");
       $("#bigimg").html("<img src=" + imgsrc + " />");
     },
@@ -203,16 +197,16 @@ export default {
     },
     //放大
     expand() {
-      var imgsrc = document.getElementById("imgsrc");
+      var imgsrc = $(".carousel-item.active").children("img");
       if (imgsrc) {
-        imgsrc.style.height = imgsrc.offsetHeight * 1.1 + "px";
+        imgsrc.height(imgsrc.get(0).offsetHeight * 1.1 + "px");
       }
     },
     //缩小
     narrow() {
-      var imgsrc = document.getElementById("imgsrc");
+      var imgsrc = $(".carousel-item.active").children("img");
       if (imgsrc) {
-        imgsrc.style.height = imgsrc.offsetHeight / 1.1 + "px";
+        imgsrc.height(imgsrc.get(0).offsetHeight / 1.1 + "px");
       }
     },
   },
@@ -227,7 +221,7 @@ export default {
 }
 
 #imgdiv img {
-  max-height: 250px;
+  max-height: 300px;
   max-width: 250px;
 }
 
@@ -242,7 +236,7 @@ export default {
 }
 
 #bigimg img {
-  width: 1000px;
+  max-width: 1000px;
   margin: auto;
   position: fixed;
   left: 0;
