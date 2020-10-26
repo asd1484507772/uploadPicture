@@ -103,6 +103,14 @@
                 <span class="sr-only">Next</span>
               </a>
             </div>
+            <!-- 进度条 -->
+            <div class="progress" style="display: none">
+              <div
+                class="progress-bar progress-bar-striped progress-bar-animated"
+                style="width: 0%"
+              ></div>
+            </div>
+            <!-- 放大缩小 -->
             <div class="handleimg-head">
               <img
                 class="imgbtn expand"
@@ -125,6 +133,7 @@
               type="button"
               class="btn btn-default"
               onclick="$('#myFile').click();"
+              @click="changeProgress"
             >
               浏览
             </button>
@@ -156,6 +165,7 @@ function baseFileAjax(data, method) {
     },
   });
 }
+
 export default {
   name: "HelloWorld",
   data() {
@@ -181,6 +191,10 @@ export default {
       if (file && supportedTypes.indexOf(file.type) >= 0) {
         baseFileAjax(new FormData($("#fileForm")[0]), function (result) {
           vm.idPicUrl.push(result.url);
+          $(".progress").removeAttr("style");
+          setTimeout(function () {
+            $(".progress-bar").css("width", "100%");
+          }, 600);
         });
       } else {
         alert("文件格式只支持：jpg、jpeg 和 png");
@@ -208,6 +222,10 @@ export default {
       if (imgsrc) {
         imgsrc.height(imgsrc.get(0).offsetHeight / 1.1 + "px");
       }
+    },
+    changeProgress() {
+      $(".progress").css("display", "none");
+      $(".progress-bar").css("width", "0%");
     },
   },
 };
